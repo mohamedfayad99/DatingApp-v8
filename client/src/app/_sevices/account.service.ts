@@ -17,6 +17,7 @@ currentuser=signal<User | null>(null);
         if(user){
           localStorage.setItem('user', JSON.stringify(user));
           this.currentuser.set(user) ;
+          console.log(this.currentuser());
           }
       })
     )
