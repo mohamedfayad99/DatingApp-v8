@@ -15,21 +15,21 @@ public class AccountController(DataContext context,ITokenServices token) :BaseAp
     [HttpPost("register")]
     public async Task<ActionResult<UserDTO>> Register(RegisterDTO registerDTO)
     {
+        return Ok();
+        // if(await IsExist(registerDTO.username)) return BadRequest("Username is taken");
+        // using var hmac=new HMACSHA512();
+        // var user=new AppUser{
+        //     UserName = registerDTO.username,
+        //     PasswordHash =hmac.ComputeHash(Encoding.UTF8.GetBytes(registerDTO.password)),
+        //     PasswordSalt=hmac.Key
 
-        if(await IsExist(registerDTO.username)) return BadRequest("Username is taken");
-        using var hmac=new HMACSHA512();
-        var user=new AppUser{
-            UserName = registerDTO.username,
-            PasswordHash =hmac.ComputeHash(Encoding.UTF8.GetBytes(registerDTO.password)),
-            PasswordSalt=hmac.Key
-
-        };
-        context.Users.Add(user);
-        await context.SaveChangesAsync();
-        return new UserDTO(){
-            UserName = user.UserName,
-            Token=token.CreateToken(user)
-        };
+        // };
+        // context.Users.Add(user);
+        // await context.SaveChangesAsync();
+        // return new UserDTO(){
+        //     UserName = user.UserName,
+        //     Token=token.CreateToken(user)
+        // };
     }
     [HttpPost("Login")]
     public async Task<ActionResult<UserDTO>> Login(LoginDTO loginDTO){
