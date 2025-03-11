@@ -1,1 +1,64 @@
-<p>member-detail works!</p>
+@if(member){
+    <div class="class row">
+        <div class="class col-4">
+            <div class="class card">
+                <img src="{{member.photoUrl ||'./assets/user.jpg'}} "
+                alt="{{member.knownAs}}"
+                class="crad-img img-thmbnail">
+                <div class="card-body">
+                    <div>
+                        <strong>Location:</strong>
+                        <p>{{member.city}}, {{member.country}}</p>
+                    </div>
+                    <div>
+                        <strong>Age:</strong>
+                        <p>{{member.age}}</p>
+                    </div>
+                    <div>
+                        <strong>Last Active:</strong>
+                        <p>{{member.lastActive}}</p>
+                    </div>
+                    <div>
+                        <strong>Member Since:</strong>
+                        <p>{{member.created}}</p>
+                    </div>
+
+                </div>
+                <div class="card-footer">
+                    <div class="btn-group d-flex">
+                        <button class="btn btn-primary">Like</button>
+                        <button routerLink="/messages" class="btn btn-success">Messages</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-8">
+            <tabset class="member-tabset">
+                <tab heading="About {{member.knownAs}}">
+                    <h4>Description</h4>
+                    <p>{{member.introduction}}</p>
+                    <h4>Lokking For</h4>
+                    <p>{{member.lookingfor}}</p>
+                </tab>
+                <tab heading="Interestes">
+                    <h4>Interestes</h4>
+                    <p>{{member.interests}}</p>
+                </tab>
+                <tab heading="Photos" #phototap="tab">
+                    @if(phototap.active){
+                        <gallery [items]="images"
+                         class="gallery" >
+                        </gallery>
+                    }
+                   
+
+                   
+                </tab>
+                <tab heading="Messages">
+                    <h4>Messages</h4>
+                    <p>Messages will go here</p>
+                </tab>
+            </tabset>
+        </div>
+    </div>
+}
