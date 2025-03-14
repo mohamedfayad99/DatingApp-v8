@@ -10,7 +10,8 @@ public class AutoMapperProfiles:Profile
     {
         CreateMap<AppUser,MemberDTO>()
             .ForMember(dist=>dist.PhotoUrl,o=>o.MapFrom(s=>s.Photos.FirstOrDefault(x=>x.IsMain)!.Url));
-        CreateMap<Photo,PhotoDTO>();
+       CreateMap<Photo,PhotoDTO>();
+        CreateMap<MemberUpdatesDTO,AppUser>();
     }  
 
 }
