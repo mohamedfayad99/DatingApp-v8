@@ -16,9 +16,7 @@ currentuser=signal<User | null>(null);
     return this.http.post<User>(this.baseUrl +'account/login',model).pipe(
       map ( user => {
         if(user){
-          localStorage.setItem('user', JSON.stringify(user));
-          this.currentuser.set(user) ;
-          console.log(this.currentuser());
+          this.SetCurrentUser(user);
           }
       })
     )
@@ -31,11 +29,14 @@ currentuser=signal<User | null>(null);
     return this.http.post<User>(this.baseUrl +'account/register',model).pipe(
       map ( user => {
         if(user){
-          localStorage.setItem('user', JSON.stringify(user));
-          this.currentuser.set(user) ;
+          this.SetCurrentUser(user);
           }
           return user;
       })
     )
+  }
+  SetCurrentUser(user:User){
+    localStorage.setItem('user', JSON.stringify(user));
+    this.currentuser.set(user) ;
   }
 }

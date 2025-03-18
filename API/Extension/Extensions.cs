@@ -1,5 +1,6 @@
 using System.Text;
 using API.Data;
+using API.Helpers;
 using API.Interfaces;
 using API.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -25,7 +26,9 @@ public static class Extensions
         services.AddScoped<ITokenServices, TokenServices>();
         services.AddCors();
         services.AddScoped<IUserRepository,Userrepository>();
+        services.AddScoped<IPhotoServices,Photoservice>();
         services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+        services.Configure<CloudinarySetting>(configuration.GetSection("CloudinarySetting"));
         return services;
 
     }

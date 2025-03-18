@@ -75,7 +75,7 @@
                     
                 </tab>
                 <tab heading="Edit Photos">
-                    Photo here 
+                    <app-photo-edit [member]="member"(memberchange)="onMemberChange($event)"></app-photo-edit>
                 </tab>
                 <tab heading="Messages">
                     <h4>Messages</h4>
