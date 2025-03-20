@@ -1,4 +1,4 @@
-# 🌟 Course Management System (.NET 8 & Angular 17/18)
+# 🌟 project Management System (.NET 8 & Angular 17/18)
 
 ## 📖 Description
 This project has been **completely refreshed and updated** for **.NET 8.0 and Angular 17/18**.  
