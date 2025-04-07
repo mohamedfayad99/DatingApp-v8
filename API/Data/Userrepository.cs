@@ -23,8 +23,16 @@ public class Userrepository(DataContext _context,IMapper _mapper) : IUserReposit
 
     public  async Task<PagedList<MemberDTO>> GetMembersAsync(UserParams userParams)
     {
-        var users= _context.Users.ProjectTo<MemberDTO>(_mapper.ConfigurationProvider);
-        return await PagedList<MemberDTO>.CreateAsync(users,userParams.PageNumber,userParams.PageSize);
+        var users= _context.Users.AsQueryable();
+        users=users.Where(m => m.UserName != userParams.CurrentUserName);
+        if(userParams.Gender != null){ //for filtering
+            users=users.Where(x=>x.Gender == userParams.Gender);
+        }
+        users=userParams.OrderBy switch{
+            "created" =>users.OrderByDescending(x=>x.Created),
+            _ => users.OrderByDescending(x=>x.LastActive)
+        };
+        return await PagedList<MemberDTO>.CreateAsync(users.ProjectTo<MemberDTO>(_mapper.ConfigurationProvider),userParams.PageNumber,userParams.PageSize);
     }
 
     public async Task<AppUser> GetUserByIdAsync(int id)

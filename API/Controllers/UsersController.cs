@@ -15,7 +15,9 @@ namespace API.Controllers;
 public class UsersController(IUserRepository _repository,IMapper _mapper,IPhotoServices _photoservice) : BaseApiController
 {
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<MemberDTO>>> GetAllUsers([FromQuery]UserParams userParams){
+    public async Task<ActionResult<IEnumerable<MemberDTO>>> GetAllUsers([FromQuery]UserParams userParams)
+    {
+        userParams.CurrentUserName = User.GetClaimUser();
         var users=await _repository.GetMembersAsync(userParams);
         Response.AddPaginnationHeader(users);
         return Ok(users);

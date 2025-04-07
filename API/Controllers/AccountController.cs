@@ -28,7 +28,8 @@ public class AccountController(DataContext context,ITokenServices token,IMapper 
         return new UserDTO(){
             UserName = user.UserName,
             Token=token.CreateToken(user),
-            Knownas=user.KnownAs
+            Knownas=user.KnownAs,
+            Gender=user.Gender
         };
     }
     [HttpPost("Login")]
@@ -45,6 +46,7 @@ public class AccountController(DataContext context,ITokenServices token,IMapper 
             UserName = user.UserName,
              Knownas=user.KnownAs,
             Token=token.CreateToken(user),
+            Gender=user.Gender,
             PhotoUrl=user.Photos.FirstOrDefault(x=>x.IsMain)?.Url
         };
     }

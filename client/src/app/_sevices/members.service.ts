@@ -5,6 +5,7 @@ import { Member } from '../_model/member';
 import { of, tap } from 'rxjs';
 import { Photo } from '../_model/photo';
 import { PaginationResult } from '../_model/pagination';
+import { UserParams } from '../_model/userparms';
 
 @Injectable({
   providedIn: 'root'
@@ -16,13 +17,10 @@ baseurel="https://localhost:5001/api/";
 paginationResult=signal<PaginationResult<Member[]> | null >(null);
 
 
-    getMembers(pageNumber?:number,pageSize?:number){
-      let params=new HttpParams();
-      if(pageNumber && pageSize){
-        params=params.append('pageNumber',pageNumber);
-        params=params.append('pageSize',pageSize);
-      }
-
+    getMembers(userParams:UserParams){
+      let params=this.setPaginationHeader(userParams.pageNumber,userParams.pageSize);
+      params=params.append('gender',userParams.gender);
+      params=params.append('orderby',userParams.orderby);
       return this.http.get<Member[]>(this.baseurel+'users',{observe:'response',params}).subscribe({
         next:response=>{
           this.paginationResult.set({
@@ -30,7 +28,17 @@ paginationResult=signal<PaginationResult<Member[]> | null >(null);
             pagination:JSON.parse(response.headers.get('pagination')!)
           })
         }
+        
       })
+     
+    }
+    private setPaginationHeader(pageNumber:number,pageSize:number){
+      let params=new HttpParams();
+      if(pageNumber && pageSize){
+        params=params.append('pageNumber',pageNumber);
+        params=params.append('pageSize',pageSize);
+      }
+      return params;
     }
     getMember(username:string){
       // const member=this.members().find(m => m.username ===username)
