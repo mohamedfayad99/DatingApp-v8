@@ -24,4 +24,6 @@ public class AppUser
     public int GetAge(){
         return DateOfBirth.CalculateAge();
     }
+    public List<UserLike> LikeByUsers{get; set;}=[];
+    public List<UserLike> LikedUsers {get; set;}=[];    
 }

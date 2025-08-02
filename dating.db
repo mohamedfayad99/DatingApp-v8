@@ -1,0 +1,1 @@
+SELECT * FROM LikedUsers WHERE sourceuserId = 5 OR targetuserId = 5;
