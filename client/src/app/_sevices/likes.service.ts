@@ -1,5 +1,4 @@
 import { inject, Injectable, signal } from '@angular/core';
-import { environment } from '../../environments/environment';
 import { HttpClient, HttpContext } from '@angular/common/http';
 import { Member } from '../_model/member';
 

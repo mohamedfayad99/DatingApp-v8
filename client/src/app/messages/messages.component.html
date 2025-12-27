@@ -1,1 +1,85 @@
-<p>messages works!</p>
+<div class="container mt-3">
+
+  <!-- Header -->
+  <div class="d-flex justify-content-between align-items-center">
+    <h3 *ngIf="predicate === 'received'">Received Messages</h3>
+    <h3 *ngIf="predicate === 'sent'">Sent Messages</h3>
+
+    <button class="btn btn-success" (click)="showCreateForm = !showCreateForm">
+      + New Message
+    </button>
+  </div>
+
+  <!-- Create message form -->
+  <div *ngIf="showCreateForm" class="card mt-3 mb-3">
+    <div class="card-body">
+
+      <div class="mb-2">
+        <label>Recipient Username</label>
+        <input
+          type="text"
+          class="form-control"
+          [(ngModel)]="recipientName">
+      </div>
+
+      <div class="mb-2">
+        <label>Message</label>
+        <textarea
+          class="form-control"
+          rows="3"
+          [(ngModel)]="content">
+        </textarea>
+      </div>
+
+      <button class="btn btn-primary me-2" (click)="sendMessage()">
+        Send
+      </button>
+
+      <button class="btn btn-secondary" (click)="showCreateForm = false">
+        Cancel
+      </button>
+
+    </div>
+  </div>
+
+  <!-- Toggle buttons -->
+  <div class="btn-group mb-3">
+    <button class="btn btn-primary" (click)="switch('received')">
+      Received
+    </button>
+
+    <button class="btn btn-primary" (click)="switch('sent')">
+      Sent
+    </button>
+  </div>
+
+  <!-- Message list -->
+  <div *ngFor="let message of messages" class="card mb-2">
+    <div class="card-body">
+
+      <p>
+        <strong *ngIf="predicate === 'received'">
+          From: {{ message.senderName }}
+        </strong>
+
+        <strong *ngIf="predicate === 'sent'">
+          To: {{ message.recipientName }}
+        </strong>
+      </p>
+
+      <p>{{ message.content }}</p>
+
+      <small class="text-muted">
+        {{ message.dateSent | date:'short' }}
+      </small>
+
+      <button
+        class="btn btn-sm btn-danger float-end"
+        (click)="deleteMessage(message.id)">
+        Delete
+      </button>
+
+    </div>
+  </div>
+
+</div>
